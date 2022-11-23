@@ -30,6 +30,33 @@ public class Book {
             {
                 case 1:
                     System.out.println("insertdata");
+                    System.out.println("enter book name");
+                    bookname=s.next();
+                    System.out.println("enter author name");
+                    author=s.next();
+                    System.out.println("enter category");
+                    category=s.next();
+                    System.out.println("enter book charge per day");
+                    bookchargeperday=s.nextInt();
+                    System.out.println("enter etablish date");
+                    eastablishdate=s.next();
+
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
+                        String sql="INSERT INTO `book`(`bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate`) VALUES (?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setString(2,bookname);
+                        stmt.setString(3,author);
+                        stmt.setString(4,category );
+                        stmt.setInt(5,bookchargeperday);
+                        stmt.setString(6,eastablishdate);
+
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
 
                 case 2:
                     System.out.println("select data");
