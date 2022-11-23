@@ -2,21 +2,19 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Book {
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         int choice;
-        String bookname,author,category,eastablishdate;
+        String bookname, author, category, eastablishdate;
         int bookchargeperday;
-        Scanner s= new Scanner(System.in);
-        while(true){
+        Scanner s = new Scanner(System.in);
+        while (true) {
             System.out.println("1.select any option");
             System.out.println("1.insert");
             System.out.println("2.select");
@@ -26,90 +24,86 @@ public class Book {
             System.out.println("6.exit");
             System.out.println("enter the choice");
             choice = s.nextInt();
-            switch (choice)
-            {
+            switch (choice) {
                 case 1:
                     System.out.println("insertdata");
                     System.out.println("enter book name");
-                    bookname=s.next();
+                    bookname = s.next();
                     System.out.println("enter author name");
-                    author=s.next();
+                    author = s.next();
                     System.out.println("enter category");
-                    category=s.next();
+                    category = s.next();
                     System.out.println("enter book charge per day");
-                    bookchargeperday=s.nextInt();
+                    bookchargeperday = s.nextInt();
                     System.out.println("enter etablish date");
-                    eastablishdate=s.next();
+                    eastablishdate = s.next();
 
-                    try{
+                    try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
-                        String sql="INSERT INTO `book`(`bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate`) VALUES (?,?,?,?,?)";
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "INSERT INTO `book`(`bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate`) VALUES (?,?,?,?,?)";
                         PreparedStatement stmt = con.prepareStatement(sql);
-                        stmt.setString(2,bookname);
-                        stmt.setString(3,author);
-                        stmt.setString(4,category );
-                        stmt.setInt(5,bookchargeperday);
-                        stmt.setString(6,eastablishdate);
+                        stmt.setString(2, bookname);
+                        stmt.setString(3, author);
+                        stmt.setString(4, category);
+                        stmt.setInt(5, bookchargeperday);
+                        stmt.setString(6, eastablishdate);
 
 
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
 
                 case 2:
                     System.out.println("select data");
-                    try{
+                    try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
-                        String sql="SELECT `id`, `bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate` FROM `book`  ";
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "SELECT `id`, `bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate` FROM `book`  ";
                         Statement stmt = con.createStatement();
-                        ResultSet rs= stmt.executeQuery(sql);
-                        while (rs.next()){
-                            String getbookname=rs.getString("bookname");
-                            String getauthor=rs.getString("author");
-                            String getcategory=rs.getString("category");
-                            String getbookchargeperday=rs.getString("bookchargeperday");
-                            String geteastablishdate=rs.getString("eastablishdate");
-                            System.out.println("bookname="+getbookname);
-                            System.out.println("author="+getauthor);
-                            System.out.println("category="+getcategory);
-                            System.out.println("bookchargeperday="+getbookchargeperday);
-                            System.out.println("establishdate="+geteastablishdate);
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getbookname = rs.getString("bookname");
+                            String getauthor = rs.getString("author");
+                            String getcategory = rs.getString("category");
+                            String getbookchargeperday = rs.getString("bookchargeperday");
+                            String geteastablishdate = rs.getString("eastablishdate");
+                            System.out.println("bookname=" + getbookname);
+                            System.out.println("author=" + getauthor);
+                            System.out.println("category=" + getcategory);
+                            System.out.println("bookchargeperday=" + getbookchargeperday);
+                            System.out.println("establishdate=" + geteastablishdate);
 
                         }
 
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
                 case 3:
                     System.out.println("search data");
 
                     System.out.println("enter bookcharge:");
-                    bookchargeperday=s.nextInt();
-                    try{
+                    bookchargeperday = s.nextInt();
+                    try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
-                        String sql="SELECT `id`, `bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate` FROM `book` WHERE `bookchargeperday`="+String.valueOf(bookchargeperday);
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "SELECT `id`, `bookname`, `author`, `category`, `bookchargeperday`, `eastablishdate` FROM `book` WHERE `bookchargeperday`=" + String.valueOf(bookchargeperday);
                         Statement stmt = con.createStatement();
-                        ResultSet rs= stmt.executeQuery(sql);
-                        while(rs.next()){
-                            String getbookname=rs.getString("bookname");
-                            String getauthor=rs.getString("author");
-                            String getcategory=rs.getString("category");
-                            String getbookchargeperday=rs.getString("bookchargeperday");
-                            String geteastablishdate=rs.getString("eastablishdate");
-                            System.out.println("bookname="+getbookname);
-                            System.out.println("author="+getauthor);
-                            System.out.println("category="+getcategory);
-                            System.out.println("bookchargeperday="+getbookchargeperday);
-                            System.out.println("eastablishdate="+geteastablishdate);
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getbookname = rs.getString("bookname");
+                            String getauthor = rs.getString("author");
+                            String getcategory = rs.getString("category");
+                            String getbookchargeperday = rs.getString("bookchargeperday");
+                            String geteastablishdate = rs.getString("eastablishdate");
+                            System.out.println("bookname=" + getbookname);
+                            System.out.println("author=" + getauthor);
+                            System.out.println("category=" + getcategory);
+                            System.out.println("bookchargeperday=" + getbookchargeperday);
+                            System.out.println("eastablishdate=" + geteastablishdate);
 
                         }
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
 
@@ -117,40 +111,53 @@ public class Book {
                 case 4:
                     System.out.println("update data");
                     System.out.println("enter bookcharge per day");
-                    bookchargeperday=s.nextInt();
+                    bookchargeperday = s.nextInt();
                     System.out.println("enter bookname to be updated");
-                    bookname=s.next();
+                    bookname = s.next();
                     System.out.println("enter author to be updated");
-                    author=s.next();
+                    author = s.next();
                     System.out.println("enter category to be updated");
-                    category=s.next();
+                    category = s.next();
                     System.out.println("enter book charge per day to be updated");
-                    int book=s.nextInt();
+                    int book = s.nextInt();
                     System.out.println("enter establishdate updated");
-                    eastablishdate=s.next();
+                    eastablishdate = s.next();
 
                     try {
                         Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb","root","");
-                        String sql="UPDATE `employees` SET `bookname`='"+bookname+"',`author`='"+author+"',`category`='"+category+"',`bookchargeperday`='"+String.valueOf(book)+"',`eastablishdate`='"+eastablishdate+"' WHERE `bookchargeperday`="+String.valueOf(bookchargeperday);
-                        Statement stmt =con.createStatement();
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb", "root", "");
+                        String sql = "UPDATE `employees` SET `bookname`='" + bookname + "',`author`='" + author + "',`category`='" + category + "',`bookchargeperday`='" + String.valueOf(book) + "',`eastablishdate`='" + eastablishdate + "' WHERE `bookchargeperday`=" + String.valueOf(bookchargeperday);
+                        Statement stmt = con.createStatement();
                         stmt.executeUpdate(sql);
                         System.out.println("update successfully");
-                    }
-                    catch(Exception e){
+                    } catch (Exception e)
+                    {
                         System.out.println(e);
-
+                    }
                 case 5:
                     System.out.println("delete data");
+                    System.out.println("enter book charge:");
+                    String charge = s.next();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "DELETE FROM `book` WHERE `bookchargeperday`=" + charge;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("deleted successfully");
+                    } catch (Exception e) {
+                        System.out.println((e));
+                    }
 
                 case 6:
                     System.out.println("exit");
                     System.exit(0);
                     break;
-            }
-        }
+            }    }
     }
 }
+
+
 
 
 
